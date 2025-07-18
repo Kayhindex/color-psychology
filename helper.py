@@ -1,19 +1,15 @@
 # helper.py
 import streamlit as st
-import os
-from dotenv import load_dotenv
 import google.generativeai as genai
 from PIL import Image
 import numpy as np
 from sklearn.cluster import KMeans
 
-# Load environment variables
-load_dotenv()
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+# Load Gemini API key from Streamlit secrets
+GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 
 # Configure Gemini once
 genai.configure(api_key=GEMINI_API_KEY)
-
 
 # -------------------- COLOR EXTRACTION --------------------
 def extract_dominant_colors(image_file, k=5):
@@ -33,7 +29,6 @@ def extract_dominant_colors(image_file, k=5):
 
     dominant_colors = kmeans.cluster_centers_.astype(int)
     return dominant_colors
-
 
 # -------------------- GEMINI SESSION SETUP --------------------
 def get_gemini_chat_session():
@@ -57,56 +52,10 @@ def get_gemini_chat_session():
         model_name="gemini-2.0-flash-lite",
         generation_config=generation_config,
         safety_settings=safety_settings,
-        system_instruction="""
-       You are HueBot — a specialist in color psychology, mobile app UI/UX design, and human-computer interaction.
-
-🎯 Target Audience:
-Your responses are tailored for mobile app developers, UI/UX designers, product managers, researchers, and students who seek to improve user engagement, emotional impact, and usability through effective color choices in mobile applications.
-
-🧠 Your Role:
-Assist users in designing psychologically effective color schemes for mobile apps by analyzing the emotional and cognitive impact of color combinations only. For every HEX color code you mention (e.g., #ffffff), also include a small, round visual swatch in the response using HTML — like a circle with the same background color next to the code.
-
-Focus Areas:
-1. The emotional, psychological, and cognitive effects of color in mobile user interfaces.
-2. Recommending optimal color palettes based on app categories such as:
-   - Health
-   - Education
-   - Finance
-   - Social Media
-   - E-commerce
-   - Gaming
-   - Productivity
-   - Entertainment & Streaming
-   - Fitness & Wellness
-   - News & Media
-   - Travel & Hospitality
-   - Children’s Apps
-   - Mental Health & Mindfulness
-
-3. Improving user engagement, attention, trust, and retention through strategic color use.
-4. Analyzing dominant colors from uploaded UI screenshots or HEX codes and providing detailed psychological insights.
-5. Recommending improvements for contrast, readability, accessibility, and compliance with design standards such as WCAG.
-6. Encouraging inclusive, emotion-aware, and culturally sensitive UI design.
-
-🗣️ Important Instruction:
-After providing your suggestions, **always ask the user about their app's target audience** (e.g., children, teenagers, professionals, elderly, global vs local audience) to ensure your recommendations are contextually appropriate.
-
-🚫 Strict Rules:
-- ❌ Do not answer questions unrelated to color psychology or mobile UI design.
-- ❌ Do not engage in topics such as general development, backend coding, or non-visual technical concerns.
-- ✅ Only respond based on scientific research in color psychology, HCI (Human-Computer Interaction), visual UX principles, and engagement strategy.
-- ✅ Be constructive, informative, practical, and specific in your suggestions.
-
-🎯 Objective:
-Educate and guide users in selecting emotionally effective, accessible, and visually engaging color palettes that enhance usability, trust, and overall experience in mobile applications.
-
-
-Your responses should educate and guide users in selecting color palettes that enhance engagement, trust, readability, and emotional resonance in mobile apps.
-   """
+        system_instruction="""..."""  # Keep the full system instructions here
     )
 
     return model.start_chat(history=[])
-
 
 # -------------------- GEMINI MESSAGE HANDLER --------------------
 def ask_gemini(prompt: str, chat_session) -> str:
@@ -114,6 +63,7 @@ def ask_gemini(prompt: str, chat_session) -> str:
     response = chat_session.send_message(prompt)
     return response.text
 
+# -------------------- SIDEBAR --------------------
 def render_sidebar():
     st.markdown("""
         <style>
@@ -142,22 +92,18 @@ def render_sidebar():
             border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Hide default sidebar nav */
         [data-testid="stSidebarNav"] {
             display: none !important;
         }
 
-        /* Custom link style */
-        section[data-testid="stSidebar"] a {
-            color: #f0f9ff !important;
-            font-weight: 500;
-            text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+        section[data-testid="stSidebar"] button {
+            color: #ffffff !important;
+            font-weight: 600 !important;
         }
 
-        section[data-testid="stSidebar"] a:hover {
-            color: #ffffff !important;
-            text-decoration: none;
-            font-weight: 600;
+        section[data-testid="stSidebar"] button:hover {
+            color: #e0f2fe !important;
+            background-color: rgba(255, 255, 255, 0.1) !important;
         }
         </style>
     """, unsafe_allow_html=True)
