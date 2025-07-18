@@ -2,7 +2,7 @@ import streamlit as st
 from helper import render_sidebar
 
 # Page Configuration
-st.set_page_config(page_title="Color Psychology System", layout="wide")
+st.set_page_config(page_title="🎨Color Psychology System", layout="wide")
 render_sidebar()
 
 # --- Custom CSS Styling (Full width & Pleasant theme) ---
