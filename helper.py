@@ -92,28 +92,35 @@ def render_sidebar():
             border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+        /* Hide default sidebar nav */
         [data-testid="stSidebarNav"] {
             display: none !important;
         }
 
-        section[data-testid="stSidebar"] button {
+        /* Force link text to white */
+        section[data-testid="stSidebar"] a {
             color: #ffffff !important;
-            font-weight: 600 !important;
+            font-weight: 500;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
         }
 
-        section[data-testid="stSidebar"] button:hover {
-            color: #e0f2fe !important;
-            background-color: rgba(255, 255, 255, 0.1) !important;
+        section[data-testid="stSidebar"] a:hover {
+            color: #ffffff !important;
+            text-decoration: none;
+            font-weight: 600;
         }
         </style>
     """, unsafe_allow_html=True)
 
     with st.sidebar:
         st.markdown('<div class="sidebar-title">🎯 Navigation</div>', unsafe_allow_html=True)
-        st.page_link("Home.py", label="🏠 Home")
-        st.page_link("pages/chatbot.py", label="🤖 Ask HueBot")
-        st.page_link("pages/analysis.py", label="📊 Analyze Screenshot")
-        st.page_link("pages/dashboard.py", label="📈 Dashboard")
-        st.page_link("pages/interact.py", label="💬 Color Theme Feedback")
-        st.page_link("pages/about.py", label="📘 About This Project")
+
+        # ✅ Corrected page references (no .py extension)
+        st.page_link("Home", label="🏠 Home")
+        st.page_link("pages/Chatbot", label="🤖 Ask HueBot")
+        st.page_link("pages/Analysis", label="📊 Analyze Screenshot")
+        st.page_link("pages/Dashboard", label="📈 Dashboard")
+        st.page_link("pages/Interact", label="💬 Color Theme Feedback")
+        st.page_link("pages/About", label="📘 About This Project")
+
         st.markdown('<div class="footer">🔒 HueBot AI Integrated<br>Built with 💙 usability in mind</div>', unsafe_allow_html=True)
