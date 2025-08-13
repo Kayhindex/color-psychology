@@ -9,8 +9,8 @@ from sklearn.cluster import KMeans
 
 # Load environment variables
 # load_dotenv()
-# GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-GEMINI_API_KEY  = st.secrets["GEMINI_API_KEY"]
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+# GEMINI_API_KEY  = st.secrets["GEMINI_API_KEY"]
 
 # Configure Gemini once
 genai.configure(api_key=GEMINI_API_KEY)
@@ -174,3 +174,4 @@ def render_sidebar():
         st.page_link("pages/interact.py", label="💬 Color Theme Feedback")
         st.page_link("pages/about.py", label="📘 About This Project")
         st.markdown('<div class="footer">🔒 HueBot AI Integrated<br>Built with 💙 usability in mind</div>', unsafe_allow_html=True)
+
