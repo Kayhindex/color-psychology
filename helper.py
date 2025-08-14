@@ -167,11 +167,12 @@ def render_sidebar():
 
     with st.sidebar:
         st.markdown('<div class="sidebar-title">🎯 Navigation</div>', unsafe_allow_html=True)
-        st.page_link("Home.py", label="🏠 Home")
+        st.page_link("home.py", label="🏠 Home")
         st.page_link("pages/chatbot.py", label="🤖 Ask HueBot")
         st.page_link("pages/analysis.py", label="📊 Analyze Screenshot")
         st.page_link("pages/dashboard.py", label="📈 Dashboard")
         st.page_link("pages/interact.py", label="💬 Color Theme Feedback")
         st.page_link("pages/about.py", label="📘 About This Project")
         st.markdown('<div class="footer">🔒 HueBot AI Integrated<br>Built with 💙 usability in mind</div>', unsafe_allow_html=True)
+
 
